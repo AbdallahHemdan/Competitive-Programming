@@ -2,7 +2,7 @@
 // Math 
 --------------------------------------------------------------
 1- IsPrime
-
+	
 	bool IsPrime(ll Num){
 		if(Num==2)
 			return true ; 
@@ -17,6 +17,7 @@
 --------------------------------------------------------------
 2- gcd, lcm 
 
+//Euclidean Algorithm
 int gcd(int a, int b){
 	if(b==0)
 		return a ; 
@@ -28,7 +29,6 @@ int lcm(int a, int b){
 }
 ---------------------------------------------------------------
 3- Count Divisors of a Number
-
 ll CountDivisors (ll n){
 	ll Cnt = 0 , i;
 	for(i=1 ; i*i<=n ; i++){
@@ -39,10 +39,8 @@ ll CountDivisors (ll n){
 		Cnt++ ;  
 	return Cnt ;
 }
-
 ----------------------------------------------------------------
 4- Generate Divisors
-
 vector<int> GetDivisors(ll n){
 	vector<int> Divs ; 
 	ll i ;
@@ -57,15 +55,11 @@ vector<int> GetDivisors(ll n){
 	sort(Divs.begin(),Divs.end());
 	return Divs ; 
 }
-
 ----------------------------------------------------------------
 5- No.Digits of a Number
-
 	//Digits of a Num = 1+floor(log10(n));
-
 ----------------------------------------------------------------
 6- Calculate nCr
-
 int nCr(int n, int r) {
 	if (n < r)
 		return 0;
@@ -73,7 +67,6 @@ int nCr(int n, int r) {
 		return 1;
 	return n * nCr(n - 1, r - 1) / r;
 }
-
 ----------------------------------------------------------------
 7- All SubArrays
 void PrintSubArrays(vector<int> Arr, int n){
@@ -97,20 +90,15 @@ Max, Min is Minimized
 
 	int n, k ; 
 	cin >> n >> k ;
-
 	int arr[n] ; 
-	
 	for(int i=0 ;i<n ; i++)
 		cin >> Arr[i] ;
-	
 	sort(arr, arr+n);
 	int Mini = INT_MAX ;
-	
 	for(int i=0 ;i<=n-k ; i++){
 		Mini = min(Mini,arr[k+i-1]-arr[i]);
 	}
 	cout << Mini << endl ;
-
 --------------------------------------------------------------------	
 9- memset 
 memset(Arr, Value, noOfEle*sizeof(Arr[0])) ;
@@ -148,7 +136,7 @@ The Idea Based on
 	// using Sieve of Eratosthenes' algorithm.
 	// After calling this function, prime[i] will be equal 1 if i is prime, 0 otherwise.
 	// O(n.log(log(n)))
-	int Generate_Primes(int n){
+	void Generate_Primes(int n){
 		vector<bool> IsPrime(n+1,true);
 		IsPrime[0] = IsPrime[1] = false ;
 
@@ -184,6 +172,26 @@ ll GcdOfFactorial(int m, int n) {
     return Fact(min(m, n)); 
 } 
 --------------------------------------------------------------
+13- LCM Of Factorials Of Two Numbers
+
+// Calculate The LCM of The Factorial Of Two Numbers LCM(a!,b!)
+// Using The Fact : LCM of The Factorial Of Two Numbers 
+// Is The Factorial Of The Maximum Of them Fact(max(a , b))	
+typedef   long long int               ll ;
+
+ll Fact(ll x) { 
+    if (x <= 1) 
+        return 1; 
+    ll res = 2; 
+    for (int i = 3; i <= x; i++) 
+        res = (ll)res * i; 
+    return res; 
+} 
+  
+ll LCMOfFactorial(int m, int n) { 
+    return Fact(max(m, n)); 
+} 
+--------------------------------------------------------------
 14- Number Of Lines And Diameters in Polygon
 
 // If We Have Polygon of ( N vertices = N Sides)
@@ -193,7 +201,6 @@ ll GcdOfFactorial(int m, int n) {
 int nC2(int n){
 	return n*(n-1)/2 ;
 } 
-
 int nCr(int n, int r) {
 	if (n < r)
 	return 0;
@@ -201,42 +208,31 @@ int nCr(int n, int r) {
 	return 1;
 	return n * nCr(n - 1, r - 1) / r;
 }
-
 int n ; 
 cin >> n ; 
-
 int TotNumOfShapeLines = nC2(n) ;
 int NumberOfShapeDiameters = TotNumOfShapeLine - n ; 
-
 // Number Of Triangles Can Be Formed by Connecting 3 vertices of The Polygon = nC3 
 int NumOfTriangles = nCr(n,3) ;  
 -------------------------------------------------------
 15- Transform
-
 transform(s.begin(),s.end(),s.begin(),::tolower);
 transform(s.begin(),s.end(),s.begin(),::toupper);
-
 -------------------------------------------------------
 16- Change The Case of Char
 	s[0] = toupper(s[0]);
 -------------------------------------------------------
 17- Max element in Array
-
 int maxi = * max_element(Arr, Arr+n);
 int mini = * min_element(Arr, Arr+n);
-
 -------------------------------------------------------
 18- Lower,Upper bound
-
 // lower_bound ==> Return a Pointer To First Element
 // which is >= Target
-
 // upper_bound ==> Return a Pointer To First Element
 // which is > Target
-
 int Res = lower_bound(Arr, Arr+n,Target)-Arr ; 
 int Res = lower_bound(Vec.begin(),Vec.end(),Target)-Vec.begin() ; 
-
 int Res = upper_bound(Arr, Arr+n,Target)-Arr ; 
 int Res = upper_bound(Vec.begin(),Vec.end(),Target)-Vec.begin() ; 
 
@@ -414,3 +410,73 @@ int main() {
 	}
 
 ------------------------------------------------------------------
+bool IsPrime[1000000];
+vector<int> Primes;
+
+void SievePrimes() {
+	fill(IsPrime, IsPrime + 1000000, true);
+	IsPrime[0] = IsPrime[1] = false;
+
+	for (int i = 1; i<500000; i++)
+		IsPrime[2 * i] = false;
+
+	Primes.push_back(2);
+	for (int i = 3; i<1000000; i += 2) {
+		if (IsPrime[i]) {
+			if (i<500000)
+				Primes.push_back(i);
+			for (int j = 2; j*i<1000000; j++)
+				IsPrime[i*j] = false;
+		}
+	}
+}
+----------------------------------------------------------------------
+Find the Area of Triangle using the lengths of the sides
+	S = (a+b+c)/2
+	Area = sqrt(S*(S-a)*(S-b)*(S-c))
+----------------------------------------------------------------------
+Find Number in the range (L,R) 
+that is s have maximum product of its digits 
+
+Approach : 
+	The key idea here is to iterate over the digits of the number R 
+starting from the most significant digit Going from left to right. 
+i.e. from most sigificant digit to the least significant digit,
+replace the current digit with one less than current digit and replace all the digits
+after current digit in the number with 9,
+since the number has already become smaller than R at the current position
+so we can safely put any number in the following digits to maximize the product of digits.
+Also, check if the resulting number is greater than L to remain in the range
+and update the maximum product.
+----------------------------------------------------------------------
+Learn from DubSet ^ ^
+string a = "WUB"; 
+int main() {
+	IO;
+	string S; 
+	cin >> S;
+	if (S.len < 3) {
+		return cout << S << endl, 0; 
+	}
+	lop(i, 0, S.len - 2) {
+		if (S.substr(i, 3) == a) {
+			S.replace(i, 3, " ");
+		}
+	}
+	cout << S << endl;
+}
+----------------------------------------------------------------------
+insert in c++ STL =====> it also works in String 
+https://www.geeksforgeeks.org/vector-insert-function-in-c-stl/
+
+insert() is a built-in function in C++ STL which inserts
+new elements before the element at the specified position
+
+// Before:
+vec = { 10, 20, 30, 40 }
+
+vec.insert(vec.begin(), 3);
+
+// After
+vec = { 3, 10, 20, 30, 40 }
+----------------------------------------------------------------------
